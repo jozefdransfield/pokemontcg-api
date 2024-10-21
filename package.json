@@ -1,0 +1,24 @@
+{
+    "name": "hwrld",
+    "version": "1.0.0",
+    "description": "Client Library for the Pokemon TCG API (https://pokemontcg.io/)",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "/dist"
+    ],
+    "scripts": {
+        "build": "tsc --build",
+        "clean": "tsc --build --clean",
+        "test": "vitest"
+    },
+    "author": "Jozef Dransfield",
+    "license": "ISC",
+    "dependencies": {
+        "typescript": "^5.6.3"
+    },
+    "devDependencies": {
+        "http-request-mock": "^2.0.2",
+        "vitest": "^2.1.3"
+    }
+}
