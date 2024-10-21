@@ -1,5 +1,5 @@
 {
-    "name": "hwrld",
+    "name": "ok-pokey",
     "version": "1.0.0",
     "description": "Client Library for the Pokemon TCG API (https://pokemontcg.io/)",
     "main": "dist/index.js",

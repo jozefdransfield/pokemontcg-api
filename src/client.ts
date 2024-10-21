@@ -5,7 +5,7 @@ export interface Client {
 
 export class BrowserFetchClient implements Client {
 
-    private readonly apiKey?: string // TODO: Set this on the header
+    private readonly apiKey?: string
     private readonly baseUrl: string
 
     constructor(apiKey?: string, baseUrl?: string) {

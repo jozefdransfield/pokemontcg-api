@@ -10,13 +10,9 @@ describe("The cards api", () => {
     it('should get a card  by id', async () => {
         let mockClient = new MockClient([cardResponse])
 
-        const api = new PokemonTcgApi(new BrowserFetchClient());
+        const api = new PokemonTcgApi(mockClient);
 
         const card = await api.cards.get("xy1-1")
-
-        card.types.forEach( (it) => {
-            console.log(typeof it)
-        })
 
         expect(card.id).toBe("xy1-1")
         expect(mockClient.urls).toStrictEqual(["/v2/cards/xy1-1"])

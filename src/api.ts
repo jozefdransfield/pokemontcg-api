@@ -3,9 +3,8 @@ import {Client} from "./client";
 
 export class PokemonTcgApi {
     private readonly client: Client
-    private readonly baseUrl: string;
 
-    constructor(client: Client, baseUrl?: string) {
+    constructor(client: Client) {
         this.client = client
     }
 
@@ -75,8 +74,6 @@ class Query<R> {
             response.data.forEach((it)=> {
                 data.push(it)
             })
-
-            console.log(data.length)
         } while (data.length < totalCount)
 
         return data
