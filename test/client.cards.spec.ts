@@ -1,9 +1,9 @@
 import {expect, describe, it} from 'vitest'
 
-import {PokemonTcgApi} from "../src/api";
 import {cardResponse, cardSet, cardsPage1, cardsPage2} from "./util/responses";
 import {MockClient} from "./util/mock-client";
 import {BrowserFetchClient} from "../src/client";
+import {PokemonTcgApi} from "../src/api";
 
 describe("The cards api", () => {
 
