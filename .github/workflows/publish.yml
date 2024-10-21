@@ -1,13 +1,8 @@
 name: Publish to npm
 
 on:
-  push:
-    branches:
-      - main  # Change to your default branch if different
-    paths:
-      - 'package.json'
-      - 'src/**'
-
+  release:
+    types: [created]
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -25,9 +20,6 @@ jobs:
 
       - name: Run build
         run: npm run build
-
-      - name: Prepare npm package
-        run: npm version patch
 
       - name: Publish to npm
         env:
