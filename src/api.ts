@@ -1,5 +1,6 @@
 import {ApiResponse, CardSet, PokemonCard} from "./types";
 import {Client} from "./client";
+import {lastValueFrom, Observable, Subject, toArray} from "rxjs";
 
 export class PokemonTcgApi {
     private readonly client: Client
@@ -58,25 +59,33 @@ class Query<R> {
     }
 
     async all(): Promise<R[]> {
-        let params = new URLSearchParams()
+        return lastValueFrom(this.stream().pipe(toArray()))
+    }
 
-        this.addOptionalParams(params)
-        params.append("pageSize", "250")
+    stream(): Observable<R> {
+        return new Observable<R>((subscriber) => {
+            (async () => {
+                let params = new URLSearchParams()
 
-        let data : R[] = []
-        let pageNumber = 1
-        let totalCount = 0
+                this.addOptionalParams(params)
+                params.append("pageSize", "250")
 
-        do {
-            params.set("page", (pageNumber++).toString())
-            const response = await this.client.responseFor<ApiResponse<R[]>>(this.baseUrl + "?" + params.toString())
-            totalCount = response.totalCount
-            response.data.forEach((it)=> {
-                data.push(it)
-            })
-        } while (data.length < totalCount)
+                let pageNumber = 1
+                let pageSize = 0
+                let count = 0
 
-        return data
+                do {
+                    params.set("page", (pageNumber++).toString())
+                    const response = await this.client.responseFor<ApiResponse<R[]>>(this.baseUrl + "?" + params.toString())
+                    pageSize = response.pageSize
+                    count = response.count
+                    response.data.forEach((it) => {
+                        subscriber.next(it)
+                    })
+                } while (pageSize == count)
+                subscriber.complete()
+            })()
+        })
     }
 
     async paged(pageNumber: number, pageSize: number): Promise<R[]> {
